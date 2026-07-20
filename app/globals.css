@@ -1,0 +1,254 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: #050608;
+  color: #f5f6f8;
+}
+
+a {
+  color: inherit;
+}
+
+/* custom scrollbar for the main scroll container */
+#lg-scroll::-webkit-scrollbar {
+  width: 9px;
+}
+#lg-scroll::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.03);
+}
+#lg-scroll::-webkit-scrollbar-thumb {
+  background: #d71920;
+  border: 2px solid #050608;
+}
+
+/* hover behaviours */
+.lg-projcard {
+  transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), border-color 0.35s;
+}
+.lg-projcard:hover {
+  border-color: rgba(215, 25, 32, 0.6) !important;
+  transform: translateY(-4px);
+}
+.lg-skillcard {
+  transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), border-color 0.35s;
+}
+.lg-skillcard:hover {
+  border-color: rgba(215, 25, 32, 0.5) !important;
+  transform: translateY(-4px);
+}
+.lg-tech {
+  transition: border-color 0.25s, background 0.25s;
+}
+.lg-tech:hover {
+  border-color: rgba(215, 25, 32, 0.45) !important;
+  background: rgba(215, 25, 32, 0.07) !important;
+}
+.lg-navlink {
+  transition: color 0.25s;
+}
+.lg-navlink:hover {
+  color: #f5f6f8 !important;
+}
+.lg-btn-red {
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.lg-btn-red:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(215, 25, 32, 0.5) !important;
+}
+.lg-btn-ghost {
+  transition: border-color 0.25s, color 0.25s;
+}
+.lg-btn-ghost:hover {
+  border-color: #d71920 !important;
+}
+.lg-arrow {
+  transition: border-color 0.25s, color 0.25s, transform 0.2s;
+}
+.lg-arrow:hover {
+  border-color: #d71920 !important;
+  color: #d71920 !important;
+}
+.lg-arrow-solid {
+  transition: transform 0.2s;
+}
+.lg-arrow-solid:hover {
+  transform: translateY(-2px);
+}
+
+/* keyframes */
+@keyframes lgDust {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.7;
+  }
+  90% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(-120px) translateX(22px);
+    opacity: 0;
+  }
+}
+@keyframes lgBreathe {
+  0%,
+  100% {
+    opacity: 0.32;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.12);
+  }
+}
+@keyframes lgScan {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(2200px);
+  }
+}
+@keyframes lgMarquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+@keyframes lgBlink {
+  0%,
+  45% {
+    opacity: 1;
+  }
+  50%,
+  95% {
+    opacity: 0.25;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes lgSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes lgKen {
+  0% {
+    transform: scale(1.08) translate(0, 0);
+  }
+  100% {
+    transform: scale(1.18) translate(-2.5%, -2%);
+  }
+}
+@keyframes lgBar {
+  0%,
+  100% {
+    height: 18%;
+  }
+  50% {
+    height: 92%;
+  }
+}
+@keyframes lgGrad {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+@keyframes lgFloatY {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-9px);
+  }
+}
+@keyframes lgReveal {
+  from {
+    opacity: 0;
+    transform: translateY(26px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes lgCarInA {
+  from {
+    opacity: 0;
+    transform: translateX(80px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes lgCarInB {
+  from {
+    opacity: 0;
+    transform: translateX(80px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes lgInfoInA {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes lgInfoInB {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+[data-reveal] {
+  animation: lgReveal 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+/* responsive helpers (the design is desktop-first; collapse the 2-col grids) */
+@media (max-width: 900px) {
+  .lg-grid-2 {
+    grid-template-columns: 1fr !important;
+  }
+  .lg-grid-3 {
+    grid-template-columns: 1fr !important;
+  }
+  .lg-showroom {
+    grid-template-columns: 1fr !important;
+  }
+  .lg-nav-links {
+    display: none !important;
+  }
+}
+@media (min-width: 901px) and (max-width: 1280px) {
+  .lg-grid-3 {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
