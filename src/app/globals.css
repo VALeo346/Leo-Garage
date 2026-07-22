@@ -1,26 +1,293 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Leo Garage design tokens — verbatim from the Claude Design source */
+  --color-garage: #050608;
+  --color-panel: rgba(10, 11, 13, 0.62);
+  --color-race: #d71920;
+  --color-chalk: #f5f6f8;
+  --color-signal: #22c55e;
+  --color-trophy: #facc15;
+
+  --font-sans: var(--font-bricolage), sans-serif;
+  --font-display: var(--font-anton), sans-serif;
+  --font-mono: var(--font-space-mono), monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
 }
 
+html,
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #050608;
+  color: #f5f6f8;
+  overflow: hidden;
+}
+
+/* ===== scroll container scrollbar (design: #lg-scroll) ===== */
+#lg-scroll::-webkit-scrollbar {
+  width: 9px;
+}
+#lg-scroll::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.03);
+}
+#lg-scroll::-webkit-scrollbar-thumb {
+  background: #d71920;
+  border: 2px solid #050608;
+}
+
+/* ===== keyframes — verbatim from Leo Garage.dc.html ===== */
+@keyframes lgDust {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: 0.7; }
+  90% { opacity: 0.5; }
+  100% { transform: translateY(-120px) translateX(22px); opacity: 0; }
+}
+@keyframes lgBreathe {
+  0%, 100% { opacity: 0.32; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.12); }
+}
+@keyframes lgScan {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(2200px); }
+}
+@keyframes lgMarquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@keyframes lgBlink {
+  0%, 45% { opacity: 1; }
+  50%, 95% { opacity: 0.25; }
+  100% { opacity: 1; }
+}
+@keyframes lgSpin {
+  to { transform: rotate(360deg); }
+}
+@keyframes lgKen {
+  0% { transform: scale(1.08) translate(0, 0); }
+  100% { transform: scale(1.18) translate(-2.5%, -2%); }
+}
+@keyframes lgBar {
+  0%, 100% { height: 18%; }
+  50% { height: 92%; }
+}
+@keyframes lgGrad {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+@keyframes lgFloatY {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-9px); }
+}
+@keyframes lgReveal {
+  from { opacity: 0; transform: translateY(26px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes lgCarInA {
+  from { opacity: 0; transform: translateX(80px) scale(0.97); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes lgCarInB {
+  from { opacity: 0; transform: translateX(80px) scale(0.97); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes lgInfoInA {
+  from { opacity: 0; transform: translateY(22px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes lgInfoInB {
+  from { opacity: 0; transform: translateY(22px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ===== reveal-on-view (enhancement over the design's mount-only reveal) ===== */
+.lg-reveal {
+  opacity: 0;
+  transform: translateY(26px);
+}
+.lg-reveal.is-visible {
+  animation: lgReveal 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: var(--reveal-delay, 0s);
+}
+
+/* ===== hover interactions from the design ===== */
+.lg-projcard {
+  transition:
+    transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1),
+    border-color 0.35s;
+}
+.lg-projcard:hover {
+  border-color: rgba(215, 25, 32, 0.6) !important;
+  transform: translateY(-4px);
+}
+.lg-skillcard {
+  transition:
+    transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1),
+    border-color 0.35s;
+}
+.lg-skillcard:hover {
+  border-color: rgba(215, 25, 32, 0.5) !important;
+  transform: translateY(-4px);
+}
+.lg-tech {
+  transition: border-color 0.25s, background 0.25s;
+}
+.lg-tech:hover {
+  border-color: rgba(215, 25, 32, 0.45) !important;
+  background: rgba(215, 25, 32, 0.07) !important;
+}
+.lg-cta {
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.lg-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(215, 25, 32, 0.5) !important;
+}
+.lg-arrow {
+  transition: border-color 0.25s, color 0.25s, transform 0.2s;
+}
+.lg-arrow:hover {
+  border-color: #d71920 !important;
+  color: #d71920 !important;
+}
+.lg-arrow-solid:hover {
+  transform: translateY(-2px);
+}
+.lg-ghost {
+  transition: border-color 0.25s;
+}
+.lg-ghost:hover {
+  border-color: #d71920 !important;
+}
+.lg-navlink {
+  transition: color 0.25s;
+}
+.lg-navlink:hover {
+  color: #f5f6f8 !important;
+}
+
+/* ===== page transition between routes ===== */
+@keyframes lgPageIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+.lg-page-enter {
+  animation: lgPageIn 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+/* ===== ignition intro overlay ===== */
+@keyframes lgIgnSweep {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+@keyframes lgIgnLogo {
+  0% { opacity: 0; transform: translateY(10px) scale(0.96); }
+  100% { opacity: 1; transform: none; }
+}
+@keyframes lgIgnOut {
+  to { opacity: 0; visibility: hidden; }
+}
+.lg-ignition {
+  animation: lgIgnOut 0.45s ease 1.15s both;
+}
+.lg-ignition .lg-ign-logo {
+  animation: lgIgnLogo 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.lg-ignition .lg-ign-line {
+  animation: lgIgnSweep 0.9s cubic-bezier(0.6, 0, 0.2, 1) 0.15s both;
+}
+
+/* ===== skill level bars fill on reveal ===== */
+@keyframes lgFill {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+.lg-fill {
+  transform-origin: left;
+  animation: lgFill 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-play-state: paused;
+}
+.lg-reveal.is-visible .lg-fill {
+  animation-play-state: running;
+}
+
+/* ===== nav active underline ===== */
+.lg-navlink {
+  position: relative;
+}
+.lg-navlink::after {
+  content: "";
+  position: absolute;
+  left: 13px;
+  right: 13px;
+  bottom: 2px;
+  height: 2px;
+  background: #d71920;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.lg-navlink[data-active="true"]::after {
+  transform: scaleX(1);
+}
+
+/* ===== CTA shine sweep ===== */
+.lg-cta {
+  position: relative;
+  overflow: hidden;
+}
+.lg-cta::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -60%;
+  width: 40%;
+  background: linear-gradient(105deg, transparent, rgba(255, 255, 255, 0.28), transparent);
+  transform: skewX(-18deg);
+  transition: left 0.55s cubic-bezier(0.2, 0.7, 0.2, 1);
+  pointer-events: none;
+}
+.lg-cta:hover::after {
+  left: 120%;
+}
+
+/* ===== 3D tilt card ===== */
+.lg-tilt {
+  transform-style: preserve-3d;
+  transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+  will-change: transform;
+}
+
+/* ===== showroom car hover: headlight glow + lift ===== */
+.lg-car img {
+  transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1), filter 0.5s;
+}
+.lg-car:hover img {
+  transform: translateY(-6px) scale(1.012);
+  filter: drop-shadow(0 34px 44px rgba(0, 0, 0, 0.7)) drop-shadow(0 0 34px rgba(215, 25, 32, 0.28));
+}
+
+/* ===== misc polish ===== */
+::selection {
+  background: #d71920;
+  color: #fff;
+}
+:focus-visible {
+  outline: 2px solid rgba(215, 25, 32, 0.8);
+  outline-offset: 2px;
+}
+
+/* ===== accessibility: honour reduced motion ===== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
