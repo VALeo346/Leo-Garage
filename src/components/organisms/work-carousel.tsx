@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { Reveal } from "@/components/atoms/reveal";
 import { useLang } from "@/lib/i18n";
-import { getProjects, getUiCopy, projectSlug } from "@/data/content";
+import { getProjectCar, getProjects, getUiCopy, projectSlug } from "@/data/content";
 
 /**
  * Center-focused "Selected work" carousel from the home screen.
@@ -14,7 +14,7 @@ import { getProjects, getUiCopy, projectSlug } from "@/data/content";
 export function WorkCarousel() {
   const { lang } = useLang();
   const c = getUiCopy(lang);
-  const slides = getProjects(lang).slice(0, 5);
+  const slides = getProjects(lang);
 
   const [index, setIndex] = useState(0);
   const [viewportW, setViewportW] = useState(1100);
@@ -110,6 +110,7 @@ export function WorkCarousel() {
         >
           {slides.map((p, i) => {
             const active = i === index;
+            const car = getProjectCar(p.code);
             return (
               <div
                 key={p.code}
@@ -135,17 +136,25 @@ export function WorkCarousel() {
                   />
                   {/* visual */}
                   <div className="relative h-[230px] overflow-hidden bg-[linear-gradient(135deg,rgba(22,24,28,.7),rgba(7,8,9,.7))]">
-                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_72%_28%,rgba(215,25,32,.2),transparent_60%)]" />
+                    <div
+                      className="absolute inset-0"
+                      style={{
+                        background: `radial-gradient(circle at 72% 28%, ${car.accent}, transparent 60%)`,
+                      }}
+                    />
                     <span className="absolute left-4 top-4 h-5 w-5 border-l-2 border-t-2 border-race" />
                     <span className="absolute bottom-1.5 left-[22px] font-display text-[128px] leading-none text-white/6">
                       {p.num}
                     </span>
                     {/* eslint-disable-next-line @next/next/no-img-element -- transform-positioned showcase art */}
                     <img
-                      src="/assets/car_default.png"
-                      alt=""
-                      className="absolute left-1/2 top-[56%] w-[72%] -translate-x-1/2 -translate-y-1/2 drop-shadow-[0_20px_26px_rgba(0,0,0,.6)]"
+                      src={car.src}
+                      alt={car.name}
+                      className="absolute left-1/2 top-[56%] h-[78%] w-[86%] -translate-x-1/2 -translate-y-1/2 object-contain drop-shadow-[0_20px_26px_rgba(0,0,0,.6)]"
                     />
+                    <span className="absolute bottom-3 right-4 font-mono text-[9px] uppercase tracking-[.12em] text-white/45">
+                      {car.name}
+                    </span>
                     <span
                       className="absolute right-4 top-4 font-mono text-[11px] uppercase tracking-[.1em]"
                       style={{ color: p.statusColor }}

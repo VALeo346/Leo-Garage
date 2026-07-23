@@ -5,7 +5,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Reveal } from "@/components/atoms/reveal";
 import { useLang } from "@/lib/i18n";
-import { getProjects, getUiCopy, projectSlug } from "@/data/content";
+import { getProjectCar, getProjects, getUiCopy, projectSlug } from "@/data/content";
 
 export default function ProjectDetailPage({
   params,
@@ -17,6 +17,7 @@ export default function ProjectDetailPage({
   const c = getUiCopy(lang);
   const active = getProjects(lang).find((p) => projectSlug(p) === code.toLowerCase());
   if (!active) notFound();
+  const car = getProjectCar(active.code);
 
   return (
     <div className="mx-auto min-h-[calc(100vh-70px)] max-w-[1100px] px-7 pb-[120px] pt-[60px]">
@@ -48,16 +49,21 @@ export default function ProjectDetailPage({
 
       {/* hero visual */}
       <Reveal delay={0.12} className="relative my-12 h-[340px] overflow-hidden border border-white/14 bg-[linear-gradient(135deg,rgba(22,24,28,.55),rgba(7,8,9,.55))] backdrop-blur-[2px]">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_75%_25%,rgba(215,25,32,.2),transparent_55%)]" />
+        <div
+          className="absolute inset-0"
+          style={{
+            background: `radial-gradient(circle at 75% 25%, ${car.accent}, transparent 55%)`,
+          }}
+        />
         <span className="absolute left-4 top-4 h-5 w-5 border-l-2 border-t-2 border-race" />
         {/* eslint-disable-next-line @next/next/no-img-element -- transform-positioned showcase art */}
         <img
-          src="/assets/car_default.png"
-          alt=""
-          className="absolute left-1/2 top-[54%] h-[82%] -translate-x-1/2 -translate-y-1/2 drop-shadow-[0_26px_34px_rgba(0,0,0,.65)]"
+          src={car.src}
+          alt={car.name}
+          className="absolute left-1/2 top-[54%] h-[84%] w-[90%] -translate-x-1/2 -translate-y-1/2 object-contain drop-shadow-[0_26px_34px_rgba(0,0,0,.65)]"
         />
         <span className="absolute bottom-4 right-[18px] font-mono text-xs uppercase tracking-[.12em] text-[rgba(245,246,248,.5)]">
-          {active.title}
+          {car.name}
         </span>
         <span className="absolute bottom-2.5 left-6 font-display text-[120px] text-white/5">
           {active.num}

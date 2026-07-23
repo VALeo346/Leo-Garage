@@ -68,6 +68,49 @@ export interface Project {
   link?: string;
 }
 
+export interface ProjectCar {
+  src: string;
+  name: string;
+  accent: string;
+}
+
+const PROJECT_CARS: Record<string, ProjectCar> = {
+  "PT-01": {
+    src: "/assets/cars/nissan-gtr.png",
+    name: "Nissan GT-R R35",
+    accent: "rgba(30, 93, 180, .28)",
+  },
+  "PT-02": {
+    src: "/assets/cars/audi-r8.png",
+    name: "Audi R8 V10",
+    accent: "rgba(215, 25, 32, .28)",
+  },
+  "PT-03": {
+    src: "/assets/cars/toyota-supra.png",
+    name: "Toyota GR Supra",
+    accent: "rgba(250, 204, 21, .24)",
+  },
+  "PT-04": {
+    src: "/assets/cars/golf-gti.png",
+    name: "Volkswagen Golf GTI",
+    accent: "rgba(148, 163, 184, .22)",
+  },
+  "PT-05": {
+    src: "/assets/cars/tesla-model-3.png",
+    name: "Tesla Model 3 Performance",
+    accent: "rgba(226, 232, 240, .2)",
+  },
+  "PT-06": {
+    src: "/assets/car_default.png",
+    name: "Porsche 911 Carrera",
+    accent: "rgba(215, 25, 32, .2)",
+  },
+};
+
+export function getProjectCar(code: string): ProjectCar {
+  return PROJECT_CARS[code] ?? PROJECT_CARS["PT-06"];
+}
+
 export type SkillIconKind =
   | "powerbi"
   | "dax"

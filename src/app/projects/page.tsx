@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Reveal } from "@/components/atoms/reveal";
 import { useLang } from "@/lib/i18n";
-import { getProjects, getUiCopy, projectSlug } from "@/data/content";
+import { getProjectCar, getProjects, getUiCopy, projectSlug } from "@/data/content";
 
 /**
  * The Showroom: one project on stage at a time, garage-style, with alternating
@@ -22,6 +22,7 @@ export default function ProjectsPage() {
   const count = projects.length;
   const si = ((show % count) + count) % count;
   const sp = projects[si];
+  const car = getProjectCar(sp.code);
 
   const goTo = (i: number) => {
     setShow(i);
@@ -122,19 +123,25 @@ export default function ProjectsPage() {
           <span className="pointer-events-none absolute left-1/2 top-[44%] -translate-x-1/2 -translate-y-1/2 select-none font-display text-[clamp(160px,22vw,340px)] leading-none text-[rgba(255,255,255,.045)]">
             {sp.num}
           </span>
-          <div className="pointer-events-none absolute left-1/2 top-[52%] h-[52vw] max-h-[700px] w-[52vw] max-w-[700px] -translate-x-1/2 -translate-y-1/2 bg-[radial-gradient(circle,rgba(215,25,32,.16),transparent_60%)]" />
+          <div
+            className="pointer-events-none absolute left-1/2 top-[52%] h-[52vw] max-h-[700px] w-[52vw] max-w-[700px] -translate-x-1/2 -translate-y-1/2"
+            style={{ background: `radial-gradient(circle, ${car.accent}, transparent 60%)` }}
+          />
           <div
             key={`car-${si}`}
-            className="lg-car relative w-[min(100%,860px)]"
+            className="lg-car relative h-[clamp(270px,38vw,520px)] w-[min(100%,860px)]"
             style={{ animation: `${carAnim} .65s cubic-bezier(.2,.7,.2,1) both` }}
           >
             {/* eslint-disable-next-line @next/next/no-img-element -- showroom art, natural aspect */}
             <img
-              src="/assets/car_default.png"
-              alt={sp.title}
-              className="block w-full drop-shadow-[0_34px_44px_rgba(0,0,0,.7)]"
+              src={car.src}
+              alt={`${car.name} — ${sp.title}`}
+              className="absolute inset-0 h-full w-full object-contain drop-shadow-[0_34px_44px_rgba(0,0,0,.7)]"
             />
             <div className="absolute -bottom-3.5 left-1/2 h-9 w-[76%] -translate-x-1/2 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,.75),transparent_70%)]" />
+            <span className="absolute bottom-0 right-3 font-mono text-[10px] uppercase tracking-[.14em] text-white/45">
+              Car reference // {car.name}
+            </span>
           </div>
         </div>
       </div>
